@@ -4,8 +4,6 @@ import { signIn, signOut } from '../actions'
 
 class GoogleAuth extends Component {
 
-  state = { isSignedIn: null }
-
 /****  Manages Authentification by checking status every time componet is mounted  ****/
   componentDidMount(){
     window.gapi.load('client:auth2', () => {
@@ -16,11 +14,16 @@ class GoogleAuth extends Component {
       }).then(() => {
           //reference to SignIn method
           this.auth = window.gapi.auth2.getAuthInstance();
-          // Set State if Signed In status of user first time
-          this.setState({
-            isSignedIn: this.auth.isSignedIn.get()
-          })
-          // IMPORTANT | listen() = Event listener provided by gapi ->
+
+          /*** Set State if Signed In status of user first time ***/
+          // BEFORE REDUX
+          // this.setState({
+          //   isSignedIn: this.auth.isSignedIn.get()
+          // })
+
+          this.onAuthChange(this.auth.isSignedIn.get())
+
+          /*** IMPORTANT | listen() = Event listener provided by gapi -> ***/
           // listen() takes callBack function that We choose
           // function gets automatically passed a boolean variale !
           // this variable is equal to loginUser Status - true or False!
@@ -61,32 +64,57 @@ onSignOutClick = () => {
 
 /**** Render SignIn/SignOut Button ****/
   renderAuthButton(){
-    if (this.state.isSignedIn === null) {
-      return
-    } else if (this.state.isSignedIn) {
-      return (
-        <button onClick={this.onSignOutClick} className="ui red google button">
-          <i className="google icon" />
-          Sign Out
-        </button>
-      )
-    } else {
-      return (
-        <button onClick={this.onSignInClick} className="ui red google button">
-          <i className="google icon" />
-          Sign In with google
-        </button>
-      )
+    switch (this.props.isSignedIn) {
+      case true:
+        return (
+          <button onClick={this.onSignOutClick} className="ui red google button">
+            <i className="google icon" />
+            Sign Out
+          </button>
+        )
+      case false:
+        return(
+          <button onClick={this.onSignInClick} className="ui red google button">
+            <i className="google icon" />
+            Sign In with google
+          </button>
+        )
+      default: return
+
     }
+
+    // if (this.props.isSignedIn === null) {
+    //   return
+    // } else if (this.props.isSignedIn) {
+    //   return (
+    //     <button onClick={this.onSignOutClick} className="ui red google button">
+    //       <i className="google icon" />
+    //       Sign Out
+    //     </button>
+    //   )
+    // } else {
+    //   return (
+    //     <button onClick={this.onSignInClick} className="ui red google button">
+    //       <i className="google icon" />
+    //       Sign In with google
+    //     </button>
+    //   )
+    // }
   }
 
   render(){
-    console.log(this.state);
+    console.log(this.props);
     return (
       <div>{this.renderAuthButton()}</div>
     )
   }
-
 }
 
-export default connect(null, { signIn, signOut})(GoogleAuth)
+const mapStateToProps = (state) => {
+  // console.log("state",state);
+  return {
+    isSignedIn: state.auth.isSignedIn
+  }
+}
+
+export default connect(mapStateToProps, { signIn, signOut})(GoogleAuth)

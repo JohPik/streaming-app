@@ -30,7 +30,6 @@ class GoogleAuth extends Component {
 
 /*** Update State -> SigneIN ***/
 // this Function is called when signeIn Status of user changes
-
 onAuthChange = isSignedIn => this.setState({ isSignedIn });
 //longer version
 // onAuthChange = () => {
@@ -38,11 +37,12 @@ onAuthChange = isSignedIn => this.setState({ isSignedIn });
 // }
 
 
-onSignIn = () => {
+// SignIn SigOut Button
+onSignInClick = () => {
   this.auth.signIn()
 }
 
-onSignOut = () => {
+onSignOutClick = () => {
   this.auth.signOut()
 }
 
@@ -53,14 +53,14 @@ onSignOut = () => {
       return
     } else if (this.state.isSignedIn) {
       return (
-        <button onClick={this.onSignOut} className="ui red google button">
+        <button onClick={this.onSignOutClick} className="ui red google button">
           <i className="google icon" />
           Sign Out
         </button>
       )
     } else {
       return (
-        <button onClick={this.onSignIn} className="ui red google button">
+        <button onClick={this.onSignInClick} className="ui red google button">
           <i className="google icon" />
           Sign In with google
         </button>

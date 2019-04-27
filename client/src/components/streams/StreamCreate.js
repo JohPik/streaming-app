@@ -5,21 +5,37 @@ import { Field, reduxForm } from 'redux-form'
 
 class StreamCreate extends Component {
 
+  renderError = ({ error, touched }) => {
+    if (touched && error) {
+      return (
+        <div className="ui error message">
+          <div className="header">{error}</div>
+        </div>
+      )
+    }
+  }
+
 
 //long version
   // renderInput(formProps){
   //   return <input {...formProps.input}/>
   // }
 //destructing version
-  renderInput({ input, label, meta }){ //Important meta contains error message
+  renderInput = ({ input, label, meta }) => { //Important meta contains error message
+    // console.log("input: ", input);
+    // console.log("label: ", label);
+    // console.log("meta: ", meta);
+    const className = `field ${meta.error && meta.touched ? 'error' : ''}`
       return (
-      <div className="field">
+      <div className={className}>{/* IMPORTANT class error is only here because of semantic UI */}
         <label>{label}</label>
-        <input {...input}/>
-        <div>{meta.error}</div>
+        <input {...input} autoComplete="off"/> {/* {...input} passes the props from input to the </input>*/}
+        {/* Manages how error messages display */}
+        {this.renderError(meta)}
       </div>
       )
   }
+
 
   onSubmit(formValues) {
     console.log(formValues)
@@ -27,7 +43,7 @@ class StreamCreate extends Component {
 
   render(){
     return (
-      <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form">
+      <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">{/* IMPORTANT class error is only here because of semantic UI */}
         <Field
           name="title"
           component={this.renderInput}

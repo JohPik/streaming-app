@@ -7,3 +7,4 @@ export default combineReducers({
   auth: authReducer,
   form : formReducer // mandatory key required to use redux form
 })
+ 

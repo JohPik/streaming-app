@@ -45,8 +45,8 @@ renderAdmin = (streamID) => {
   if (streamID === this.props.currentUserId){
     return (
       <div className="right floated content">
-        <button className="ui button primary">EDIT</button>
-        <button className="ui button negative">DELETE</button>
+        <Link to="/streams/edit" className="ui button primary">EDIT</Link>
+        <Link to="/streams/delete" className="ui button negative">DELETE</Link>
       </div>
     )
   }

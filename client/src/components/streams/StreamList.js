@@ -29,16 +29,34 @@ class StreamList extends Component {
 renderList = () =>
     this.props.streams.map( stream =>
         <div className="item" key={stream.id}>
+          {this.renderAdmin(stream.userId)}
           <i className="large middle aligned icon camera"/>
           <div className="content">
             {stream.title}
             <div className="description">{stream.description}</div>
           </div>
+          {/* Buttons Should be displayed here but because of semantic UI add them to the top */}
+          {/* {this.renderAdmin(stream.userId)} */}
         </div>
       )
 
+renderAdmin = (streamID) => {
+  if (streamID === this.props.currentUserId){
+    return (
+      <div className="right floated content">
+        <buton className="ui button primary">EDIT</buton>
+        <buton className="ui button negative">DELETE</buton>
+      </div>
+    )
+  }
+}
+
+renderCreate = () => {
+
+}
+
   render() {
-    console.log(this.props.streams);
+    console.log(this.props);
     return (
       <div>
         <h2>Streams</h2>
@@ -52,7 +70,10 @@ renderList = () =>
 
 
 const mapStateToProps = (state) => {
-    return { streams: Object.values(state.streams)}
+    return {
+      streams: Object.values(state.streams),
+      currentUserId: state.auth.userId,
+    }
 }
 
 export default connect(mapStateToProps, {fetchStreams})(StreamList)

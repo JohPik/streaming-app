@@ -30,7 +30,7 @@ class StreamList extends Component {
 renderList = () =>
     this.props.streams.map( stream =>
         <div className="item" key={stream.id}>
-          {this.renderAdmin(stream.userId)}
+          {this.renderAdmin(stream)}
           <i className="large middle aligned icon camera"/>
           <div className="content">
             {stream.title}
@@ -41,12 +41,12 @@ renderList = () =>
         </div>
       )
 
-renderAdmin = (streamID) => {
-  if (streamID === this.props.currentUserId){
+renderAdmin = (stream) => {
+  if (stream.userId === this.props.currentUserId){
     return (
       <div className="right floated content">
-        <Link to="/streams/edit" className="ui button primary">EDIT</Link>
-        <Link to="/streams/delete" className="ui button negative">DELETE</Link>
+        <Link to={`/streams/edit/${stream.id}`} className="ui button primary">EDIT</Link>
+        <Link to={`/streams/edit/${stream.id}`} className="ui button negative">DELETE</Link>
       </div>
     )
   }

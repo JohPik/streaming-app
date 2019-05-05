@@ -43,6 +43,7 @@ renderList = () =>
 
 renderAdmin = (stream) => {
   if (stream.userId === this.props.currentUserId){
+
     return (
       <div className="right floated content">
         <Link to={`/streams/edit/${stream.id}`} className="ui button primary">EDIT</Link>
@@ -63,7 +64,6 @@ renderCreate = () => {
 }
 
   render() {
-    console.log(this.props);
     return (
       <div>
         <h2>Streams</h2>

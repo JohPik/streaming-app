@@ -24,9 +24,6 @@ class StreamCreate extends Component {
   // }
 //destructing version
   renderInput = ({ input, label, meta }) => { //Important meta contains error message
-    // console.log("input: ", input);
-    // console.log("label: ", label);
-    // console.log("meta: ", meta);
     const className = `field ${meta.error && meta.touched ? 'error' : ''}`
       return (
       <div className={className}>{/* IMPORTANT class error is only here because of semantic UI */}

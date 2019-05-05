@@ -9,8 +9,11 @@ import { fetchStream } from '../../actions'
 
 class StreamEdit extends Component {
   componentDidMount() {
-    const id = this.props.match.params.id
-    this.props.fetchStream(id)
+    if(!this.props.stream){
+      const id = this.props.match.params.id
+      return this.props.fetchStream(id)
+    }
+    return
   }
 
   render(){

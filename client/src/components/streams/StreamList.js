@@ -47,7 +47,7 @@ renderAdmin = (stream) => {
     return (
       <div className="right floated content">
         <Link to={`/streams/edit/${stream.id}`} className="ui button primary">EDIT</Link>
-        <Link to={`/streams/edit/${stream.id}`} className="ui button negative">DELETE</Link>
+        <Link to={`/streams/delete/${stream.id}`} className="ui button negative">DELETE</Link>
       </div>
     )
   }

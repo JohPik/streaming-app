@@ -33,7 +33,7 @@ renderList = () =>
           {this.renderAdmin(stream)}
           <i className="large middle aligned icon camera"/>
           <div className="content">
-            {stream.title}
+            <Link to={`/streams/${stream.id}`} className="header">{stream.title}</Link>
             <div className="description">{stream.description}</div>
           </div>
           {/* Buttons Should be displayed here but because of semantic UI add them to the top */}

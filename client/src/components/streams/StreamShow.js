@@ -13,6 +13,9 @@ class StreamShow extends Component {
   }
 
   componentDidMount(){
+    // Create the video player
+    this.buildPlayer()
+
     if (!this.props.stream) {
       const id = this.props.match.params.id
       return this.props.fetchStream(id)
@@ -20,6 +23,27 @@ class StreamShow extends Component {
     return
   }
 
+  componentDidUpdate(){
+  // Create the video player
+  this.buildPlayer()
+  }
+
+  componentWillUnmount(){
+    this.player.destroy()
+  }
+
+  buildPlayer(){
+    if(this.player || !this.props.stream) {
+      return
+    }
+    const id = this.props.match.params.id
+    this.player = flv.createPlayer({
+            type: 'flv',
+            url: `http://localhost:8000/live/${id}.flv`
+        })
+    this.player.attachMediaElement(this.videoRef.current)
+    this.player.load()
+  }
 
   render(){
     if (!this.props.stream) {
